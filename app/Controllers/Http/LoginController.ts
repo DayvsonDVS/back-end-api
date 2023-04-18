@@ -1,19 +1,33 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
+import Hash from '@ioc:Adonis/Core/Hash'
 import Login from 'App/Models/Login'
 
 export default class LoginController {
-  public async store({ request, response }: HttpContextContract) {
-    const body = request.body()
+  public async store({ request, response, auth }: HttpContextContract) {
+    const email = request.input('email')
+    const password = request.input('password')
 
-    const login = await Login.create(body)
-
-    response.status(201)
-
-    return {
-      message: 'login created successfully!',
-      data: login,
+    try {
+      const token = await auth.attempt(email, password)
+      return {
+        token: token,
+      }
+    } catch {
+      return response.unauthorized('Invalid credentials')
     }
+
+    // routes store
+
+    // const body = request.body()
+
+    // const login = await Login.create(body)
+
+    // response.status(201)
+
+    // return {
+    //   message: 'login created successfully!',
+    //   data: login,
+    // }
   }
 
   public async index() {

@@ -19,17 +19,13 @@ export default class CompanyController {
   public async index() {
     const company = await Company.all()
 
-    return {
-      data: company,
-    }
+    return company
   }
 
   public async show({ params }: HttpContextContract) {
     const company = await Company.findOrFail(params.id)
 
-    return {
-      data: company,
-    }
+    return company
   }
 
   public async destroy({ params }: HttpContextContract) {

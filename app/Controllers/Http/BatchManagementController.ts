@@ -19,17 +19,13 @@ export default class BatchManagementController {
   public async index() {
     const batchManagement = await BatchManagement.all()
 
-    return {
-      data: batchManagement,
-    }
+    return batchManagement
   }
 
   public async show({ params }: HttpContextContract) {
     const batchManagement = await BatchManagement.findOrFail(params.id)
 
-    return {
-      data: batchManagement,
-    }
+    return batchManagement
   }
 
   public async destroy({ params }: HttpContextContract) {
