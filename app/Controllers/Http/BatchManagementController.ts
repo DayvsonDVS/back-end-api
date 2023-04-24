@@ -1,18 +1,21 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Database from '@ioc:Adonis/Lucid/Database'
 
 import BatchManagement from 'App/Models/BatchManagement'
 
 export default class BatchManagementController {
   public async store({ request, response }: HttpContextContract) {
-    const body = request.body()
+    const body = request.body() as [BatchManagement]
 
-    const batchManagement = await BatchManagement.create(body)
+    body.map(async (batch) => {
+      await BatchManagement.create(batch)
+    })
 
     response.status(201)
 
     return {
       message: 'Batch management created successfully!',
-      data: batchManagement,
+      data: body,
     }
   }
 
@@ -23,9 +26,12 @@ export default class BatchManagementController {
   }
 
   public async show({ params }: HttpContextContract) {
-    const batchManagement = await BatchManagement.findOrFail(params.id)
+    const companiesBatch = await Database.from('companies')
+      .select('companies.id', 'companies.name', 'companies.cnpj')
+      .innerJoin('batch_managements', 'batch_managements.company_id', 'companies.id')
+      .where('batch_managements.batch_id', params.id)
 
-    return batchManagement
+    return companiesBatch
   }
 
   public async destroy({ params }: HttpContextContract) {

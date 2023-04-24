@@ -44,9 +44,9 @@ export default class CompanyController {
 
     const company = await Company.findOrFail(params.id)
 
-    company.name = body.email
-    company.cnpj = body.password
-    company.contract_date = body.password
+    company.name = body.name
+    company.cnpj = body.cnpj
+    company.contract_date = body.contract_date
 
     await company.save()
 

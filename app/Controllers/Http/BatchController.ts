@@ -10,10 +10,7 @@ export default class BatchController {
 
     response.status(201)
 
-    return {
-      message: 'Batch created successfully!',
-      data: batch,
-    }
+    return batch.id
   }
 
   public async index() {
