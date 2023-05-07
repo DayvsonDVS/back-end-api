@@ -1,7 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Database from '@ioc:Adonis/Lucid/Database'
-
 import BatchManagement from 'App/Models/BatchManagement'
+import { string } from '@ioc:Adonis/Core/Helpers'
 
 export default class BatchManagementController {
   public async store({ request, response }: HttpContextContract) {
@@ -26,39 +26,58 @@ export default class BatchManagementController {
   }
 
   public async show({ params }: HttpContextContract) {
-    const companiesBatch = await Database.from('companies')
-      .select('companies.id', 'companies.name', 'companies.cnpj')
-      .innerJoin('batch_managements', 'batch_managements.company_id', 'companies.id')
+    const batchManagement = await Database.from('batch_managements')
+      .select(
+        'batch_managements.id',
+        'batch_managements.batch_id',
+        'batch_managements.company_id',
+        'companies.name',
+        'companies.cnpj',
+        'batch_managements.status',
+        'batch_managements.historic',
+        'batch_managements.receipt'
+      )
+      .innerJoin('companies', 'batch_managements.company_id', 'companies.id')
       .where('batch_managements.batch_id', params.id)
 
-    return companiesBatch
+    return batchManagement
   }
 
-  public async destroy({ params }: HttpContextContract) {
-    const batchManagement = await BatchManagement.findOrFail(params.id)
+  public async destroy({ params, request }: HttpContextContract) {
+    const body = request.body() as number[]
 
-    await batchManagement.delete()
+    body.map(async (id) => {
+      await BatchManagement.query().where('batch_id', params.id).where('company_id', id).delete()
+    })
 
     return {
-      message: 'Successfully deleted batch management',
-      data: batchManagement,
+      message: 'Successfully updated batch management',
     }
   }
 
   public async update({ params, request }: HttpContextContract) {
     const body = request.body()
+    const file = request.file('file')
 
     const batchManagement = await BatchManagement.findOrFail(params.id)
 
-    batchManagement.historic = body.historic
+    if (file) {
+      const filename = `${string.generateRandom(10)}.${file.extname}`
+      await file.moveToDisk(
+        './',
+        {
+          name: filename,
+          contentType: file.extname,
+        },
+        's3'
+      )
+
+      batchManagement.receipt = `http://s3.us-east-1.amazonaws.com/xml-produtiva-adonis/${filename}`
+    }
+
     batchManagement.status = body.status
-    batchManagement.receipt = body.receipt
+    batchManagement.historic = body.historic
 
     await batchManagement.save()
-
-    return {
-      message: 'Successfully updated batch management',
-      data: batchManagement,
-    }
   }
 }

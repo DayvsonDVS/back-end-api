@@ -93,18 +93,18 @@ export default driveConfig({
     |**************************************************************************
     |
     */
-    // s3: {
-    //   driver: 's3',
-    //   visibility: 'public',
-    //   key: Env.get('S3_KEY'),
-    //   secret: Env.get('S3_SECRET'),
-    //   region: Env.get('S3_REGION'),
-    //   bucket: Env.get('S3_BUCKET'),
-    //   endpoint: Env.get('S3_ENDPOINT'),
-    //
-    //  // For minio to work
-    //  // forcePathStyle: true,
-    // },
+    s3: {
+      driver: 's3',
+      visibility: 'public',
+      key: Env.get('S3_KEY'),
+      secret: Env.get('S3_SECRET'),
+      region: Env.get('S3_REGION'),
+      bucket: Env.get('S3_BUCKET'),
+      endpoint: Env.get('S3_ENDPOINT'),
+
+      // For minio to work
+      // forcePathStyle: true,
+    },
 
     /*
     |--------------------------------------------------------------------------
@@ -119,11 +119,12 @@ export default driveConfig({
     |**************************************************************************
     |
     */
-    // gcs: {
-    //   driver: 'gcs',
-    //   visibility: 'public',
-    //   keyFilename: Env.get('GCS_KEY_FILENAME'),
-    //   bucket: Env.get('GCS_BUCKET'),
+    gcs: {
+      driver: 'gcs',
+      visibility: 'public',
+      keyFilename: Env.get('GCS_KEY_FILENAME'),
+      bucket: Env.get('GCS_BUCKET'),
+    },
 
     /*
       |--------------------------------------------------------------------------
