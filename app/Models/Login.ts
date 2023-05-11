@@ -12,6 +12,9 @@ export default class Login extends BaseModel {
   @column({ serializeAs: null })
   public password: string
 
+  @column()
+  public user: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

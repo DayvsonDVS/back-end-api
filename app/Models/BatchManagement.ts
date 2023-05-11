@@ -18,6 +18,9 @@ export default class BatchManagement extends BaseModel {
   public historic: string
 
   @column()
+  public user: string
+
+  @column()
   public receipt: string
 
   @column.dateTime({ autoCreate: true })

@@ -1,22 +1,26 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Hash from '@ioc:Adonis/Core/Hash'
 import Login from 'App/Models/Login'
 
 export default class LoginController {
   public async store({ request, response, auth }: HttpContextContract) {
+    // route Login
+
     const email = request.input('email')
     const password = request.input('password')
 
     try {
       const token = await auth.attempt(email, password)
+      const login = await Login.findByOrFail(`email`, email)
+      const user = login.user
+
       return {
-        token: token,
+        values: { token, user, email },
       }
     } catch {
       return response.unauthorized('Invalid credentials')
     }
 
-    // routes store
+    // // route Store
 
     // const body = request.body()
 
@@ -41,9 +45,7 @@ export default class LoginController {
   public async show({ params }: HttpContextContract) {
     const login = await Login.findOrFail(params.id)
 
-    return {
-      data: login,
-    }
+    return login
   }
 
   public async destroy({ params }: HttpContextContract) {
@@ -64,6 +66,7 @@ export default class LoginController {
 
     login.email = body.email
     login.password = body.password
+    login.user = body.user
 
     await login.save()
 

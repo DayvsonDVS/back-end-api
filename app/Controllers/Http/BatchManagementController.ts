@@ -33,6 +33,9 @@ export default class BatchManagementController {
         'batch_managements.company_id',
         'companies.name',
         'companies.cnpj',
+        'batch_managements.user',
+        'batch_managements.created_at',
+        'batch_managements.updated_at',
         'batch_managements.status',
         'batch_managements.historic',
         'batch_managements.receipt'
@@ -67,7 +70,6 @@ export default class BatchManagementController {
         './',
         {
           name: filename,
-          contentType: file.extname,
         },
         's3'
       )
@@ -75,8 +77,9 @@ export default class BatchManagementController {
       batchManagement.receipt = `http://s3.us-east-1.amazonaws.com/xml-produtiva-adonis/${filename}`
     }
 
-    batchManagement.status = body.status
-    batchManagement.historic = body.historic
+    batchManagement.user = body.user
+    batchManagement.status = body.payload?.status
+    batchManagement.historic = body.payload?.historic
 
     await batchManagement.save()
   }
