@@ -1,18 +1,20 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 import Company from 'App/Models/Company'
 
 export default class CompanyController {
   public async store({ request, response }: HttpContextContract) {
     const body = request.body()
 
-    const company = await Company.create(body)
+    if (Array.isArray(body)) {
+      body.map(async (company) => {
+        await Company.create(company)
+      })
 
-    response.status(201)
-
-    return {
-      message: 'Company created successfully!',
-      data: company,
+      return {
+        message: 'Company created successfully!',
+      }
+    } else {
+      await Company.create(body)
     }
   }
 
