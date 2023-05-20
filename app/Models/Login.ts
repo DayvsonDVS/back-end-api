@@ -15,6 +15,9 @@ export default class Login extends BaseModel {
   @column()
   public user: string
 
+  @column()
+  public profile: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

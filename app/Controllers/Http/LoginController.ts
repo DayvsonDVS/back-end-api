@@ -10,11 +10,12 @@ export default class LoginController {
 
     try {
       const token = await auth.attempt(email, password)
-      const login = await Login.findByOrFail(`email`, email)
+      const login = await Login.findByOrFail('email', email)
       const user = login.user
+      const profile = login.profile
 
       return {
-        values: { token, user, email },
+        values: { token, user, profile },
       }
     } catch {
       return response.unauthorized('Invalid credentials')
@@ -67,6 +68,7 @@ export default class LoginController {
     login.email = body.email
     login.password = body.password
     login.user = body.user
+    login.profile = body.profile
 
     await login.save()
 
