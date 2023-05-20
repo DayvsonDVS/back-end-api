@@ -15,6 +15,9 @@ export default class CompanyController {
       }
     } else {
       await Company.create(body)
+      return {
+        message: 'Company created successfully!',
+      }
     }
   }
 
