@@ -33,6 +33,7 @@ export default class BatchManagementController {
         'batch_managements.company_id',
         'companies.name',
         'companies.cnpj',
+        'companies.cpf',
         'batch_managements.user',
         'batch_managements.created_at',
         'batch_managements.updated_at',

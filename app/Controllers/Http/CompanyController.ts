@@ -28,9 +28,11 @@ export default class CompanyController {
   }
 
   public async show({ params }: HttpContextContract) {
-    const company = await Company.findOrFail(params.id)
+    if (!isNaN(params.id)) {
+      const company = await Company.findOrFail(params.id)
 
-    return company
+      return company
+    }
   }
 
   public async destroy({ params }: HttpContextContract) {
@@ -50,8 +52,12 @@ export default class CompanyController {
     const company = await Company.findOrFail(params.id)
 
     company.name = body.name
+    company.status = body.status
     company.cnpj = body.cnpj
+    company.cpf = body.cpf
+    company.validity_pcmso = body.validity_pcmso
     company.contract_date = body.contract_date
+    company.alert = body.alert
 
     await company.save()
 

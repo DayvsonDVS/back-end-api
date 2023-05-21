@@ -9,10 +9,22 @@ export default class Company extends BaseModel {
   public name: string
 
   @column()
+  public status: string
+
+  @column()
   public cnpj: string
 
   @column()
+  public cpf: string
+
+  @column()
+  public validity_pcmso: DateTime
+
+  @column()
   public contract_date: DateTime
+
+  @column()
+  public alert: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
