@@ -48,7 +48,6 @@ export default class CompanyController {
 
   public async update({ params, request }: HttpContextContract) {
     const body = request.body()
-
     const company = await Company.findOrFail(params.id)
 
     company.name = body.name
