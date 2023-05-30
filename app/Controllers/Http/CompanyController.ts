@@ -57,6 +57,8 @@ export default class CompanyController {
     company.validity_pcmso = body.validity_pcmso
     company.contract_date = body.contract_date
     company.alert = body.alert
+    company.email = body.email
+    company.contact = body.contact
 
     await company.save()
 

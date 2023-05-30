@@ -36,6 +36,8 @@ export default class BatchManagementController {
         'companies.cpf',
         'companies.contract_date',
         'companies.validity_pcmso',
+        'companies.email',
+        'companies.contact',
         'batch_managements.user',
         'batch_managements.created_at',
         'batch_managements.updated_at',

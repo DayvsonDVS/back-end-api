@@ -26,6 +26,12 @@ export default class Company extends BaseModel {
   @column()
   public alert: string
 
+  @column()
+  public email: string
+
+  @column()
+  public contact: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
