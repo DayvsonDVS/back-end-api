@@ -29,4 +29,5 @@ Route.group(() => {
   Route.resource('/companies', 'CompanyController').apiOnly()
   Route.resource('/lots', 'BatchController').apiOnly()
   Route.resource('/batchManagement', 'BatchManagementController').apiOnly()
+  Route.resource('/historic', 'HistoricsController').apiOnly()
 }).prefix('/api')
