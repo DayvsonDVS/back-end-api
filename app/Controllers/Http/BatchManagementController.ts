@@ -43,7 +43,8 @@ export default class BatchManagementController {
         'batch_managements.updated_at',
         'batch_managements.status',
         'batch_managements.historic',
-        'batch_managements.receipt'
+        'batch_managements.receipt',
+        'companies.scheduling'
       )
       .innerJoin('companies', 'batch_managements.company_id', 'companies.id')
       .where('batch_managements.batch_id', params.id)

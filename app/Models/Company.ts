@@ -32,6 +32,12 @@ export default class Company extends BaseModel {
   @column()
   public contact: string
 
+  @column()
+  public scheduling: string
+
+  @column()
+  public signed_contract: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
