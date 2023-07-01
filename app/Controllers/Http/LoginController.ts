@@ -3,44 +3,38 @@ import Login from 'App/Models/Login'
 
 export default class LoginController {
   public async store({ request, response, auth }: HttpContextContract) {
-    // route Login
-
+    const user = request.input('user')
     const email = request.input('email')
     const password = request.input('password')
 
-    try {
-      const token = await auth.attempt(email, password)
-      const login = await Login.findByOrFail('email', email)
-      const user = login.user
-      const profile = login.profile
+    if (user === undefined) {
+      try {
+        const token = await auth.attempt(email, password)
+        const login = await Login.findByOrFail('email', email)
+        const user = login.user
+        const profile = login.profile
 
-      return {
-        values: { token, user, profile },
+        return {
+          values: { token, user, profile },
+        }
+      } catch {
+        return response.unauthorized('Invalid credentials')
       }
-    } catch {
-      return response.unauthorized('Invalid credentials')
+    } else {
+      const body = request.body()
+      const login = await Login.create(body)
+      response.status(201)
+      return {
+        message: 'login created successfully!',
+        data: login,
+      }
     }
-
-    // // route Store
-
-    // const body = request.body()
-
-    // const login = await Login.create(body)
-
-    // response.status(201)
-
-    // return {
-    //   message: 'login created successfully!',
-    //   data: login,
-    // }
   }
 
   public async index() {
     const login = await Login.all()
 
-    return {
-      data: login,
-    }
+    return login
   }
 
   public async show({ params }: HttpContextContract) {
