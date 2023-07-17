@@ -44,6 +44,7 @@ export default class BatchManagementController {
         'batch_managements.status',
         'batch_managements.historic',
         'batch_managements.receipt',
+        'batch_managements.edit_user',
         'companies.scheduling'
       )
       .innerJoin('companies', 'batch_managements.company_id', 'companies.id')
@@ -86,6 +87,7 @@ export default class BatchManagementController {
     batchManagement.user = body.user
     batchManagement.status = body.payload?.status
     batchManagement.historic = body.payload?.historic
+    batchManagement.edit_user = body?.edit_user
 
     await batchManagement.save()
   }
