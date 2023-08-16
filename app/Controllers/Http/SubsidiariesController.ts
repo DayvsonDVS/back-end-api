@@ -24,13 +24,15 @@ export default class SubsidiariesController {
   }
 
   public async index() {
-    const companies = await Database.from('companies').select(
-      'companies.id',
-      'companies.name',
-      'companies.cnpj',
-      'companies.validity_pcmso',
-      'companies.contract_date'
-    )
+    const companies = await Database.from('companies')
+      .select(
+        'companies.id',
+        'companies.name',
+        'companies.cnpj',
+        'companies.validity_pcmso',
+        'companies.contract_date'
+      )
+      .where('companies.status', 'active')
 
     const subsidiaries = await Database.from('subsidiaries').select(
       'subsidiaries.id',
