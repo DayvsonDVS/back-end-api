@@ -33,6 +33,9 @@ export default class Company extends BaseModel {
   public contact: string
 
   @column()
+  public receipt: string
+
+  @column()
   public scheduling: string
 
   @column()

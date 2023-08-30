@@ -59,6 +59,7 @@ export default class CompanyController {
     company.alert = body.alert
     company.email = body.email
     company.contact = body.contact
+    company.receipt = body.receipt
     company.scheduling = body.scheduling
     company.signed_contract = body.signed_contract
 

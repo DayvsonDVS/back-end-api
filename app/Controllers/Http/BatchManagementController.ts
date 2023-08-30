@@ -38,6 +38,7 @@ export default class BatchManagementController {
         'companies.validity_pcmso',
         'companies.email',
         'companies.contact',
+        'companies.receipt as company_receipt',
         'batch_managements.user',
         'batch_managements.created_at',
         'batch_managements.updated_at',
