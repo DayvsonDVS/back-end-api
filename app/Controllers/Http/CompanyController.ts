@@ -62,6 +62,7 @@ export default class CompanyController {
     company.receipt = body.receipt
     company.scheduling = body.scheduling
     company.signed_contract = body.signed_contract
+    company.procuration = body.procuration
 
     await company.save()
 

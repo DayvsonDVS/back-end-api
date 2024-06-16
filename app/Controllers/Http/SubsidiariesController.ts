@@ -30,7 +30,8 @@ export default class SubsidiariesController {
         'companies.name',
         'companies.cnpj',
         'companies.validity_pcmso',
-        'companies.contract_date'
+        'companies.contract_date',
+        'companies.procuration'
       )
       .where('companies.status', 'active')
 
@@ -39,7 +40,8 @@ export default class SubsidiariesController {
       'subsidiaries.name',
       'subsidiaries.cnpj',
       'subsidiaries.validity_pcmso',
-      'subsidiaries.contract_date'
+      'subsidiaries.contract_date',
+      'subsidiaries.procuration'
     )
 
     const unionDate = [...companies, ...subsidiaries]
@@ -55,7 +57,8 @@ export default class SubsidiariesController {
           'subsidiaries.company_id',
           'subsidiaries.name',
           'subsidiaries.cnpj',
-          'subsidiaries.validity_pcmso'
+          'subsidiaries.validity_pcmso',
+          'subsidiaries.procuration'
         )
         .innerJoin('companies', 'subsidiaries.company_id', 'companies.id')
         .where('subsidiaries.company_id', params.id)

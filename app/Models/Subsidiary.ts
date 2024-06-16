@@ -21,6 +21,9 @@ export default class Subsidiary extends BaseModel {
   public validity_pcmso: DateTime
 
   @column()
+  public procuration: DateTime
+
+  @column()
   public contract_date: DateTime
 
   @column.dateTime({ autoCreate: true })

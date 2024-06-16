@@ -41,6 +41,9 @@ export default class Company extends BaseModel {
   @column()
   public signed_contract: string
 
+  @column()
+  public procuration: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
