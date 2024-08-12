@@ -19,6 +19,8 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Subsidiary from 'App/Models/Subsidiary'
 
 Route.group(() => {
   Route.get('/', async () => {
@@ -32,3 +34,11 @@ Route.group(() => {
   Route.resource('/historic', 'HistoricsController').apiOnly()
   Route.resource('/subsidiaries', 'SubsidiariesController').apiOnly()
 }).prefix('/api')
+
+Route.get('/api/subsidiaries/showIdSubsidiary/:id', async ({ params }: HttpContextContract) => {
+  if (!isNaN(params.id)) {
+    const subsidiary = await Subsidiary.findOrFail(params.id)
+
+    return subsidiary
+  }
+})

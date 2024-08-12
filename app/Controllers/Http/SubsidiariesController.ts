@@ -67,6 +67,24 @@ export default class SubsidiariesController {
     }
   }
 
+  public async update({ params, request }: HttpContextContract) {
+    const body = request.body()
+    const subsidiary = await Subsidiary.findOrFail(params.id)
+
+    subsidiary.name = body.name
+    subsidiary.cnpj = body.cnpj
+    subsidiary.validity_pcmso = body.validity_pcmso
+    subsidiary.contract_date = body.contract_date
+    subsidiary.procuration = body.procuration
+
+    await subsidiary.save()
+
+    return {
+      message: 'Successfully updated subsidiary',
+      data: subsidiary,
+    }
+  }
+
   public async destroy({ params }: HttpContextContract) {
     const subsidiary = await Subsidiary.findOrFail(params.id)
 
