@@ -26,6 +26,9 @@ export default class BatchManagement extends BaseModel {
   @column()
   public edit_user: string
 
+  @column()
+  public follow: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
